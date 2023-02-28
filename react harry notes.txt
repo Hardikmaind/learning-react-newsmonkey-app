@@ -1,0 +1,13 @@
+1.in jsx(react app.js funtion) all the class  in html are called as className. and in html's label for is called as htmlFor. tabindex is called as tabIndex
+2.in jsx(react app.js funtion) we have to include the closing tag for all the elements which dont have closing tag in html for example
+	<hr> tag in html. in jsx(react) this tag is written as <hr	_content_	/>	in this way.if any tag doesnt has a closing tag
+	we close that tag in this way.more ex are img tag ,input tag etc  
+3. in jsx. everything should be under the single element, for example , we can club evertyhing in the function in <div> </div> or <> </>
+4. in jsx(react app.js ) whatever written in { } is the javascript
+5.we dont use href="#" in react we use href="/" in react . we use react router in it
+6.when creating components ..always write its name in capital letters
+7. in javascript and react we can use the css properties but we dont have to use the "-" and have to use the camel case. for exmmple. in css we use background-color:" ".. so in react and js we write this as backgroundColor:' '
+8.to change in the JSX we use prop. to change in the Webpage we use State.with the help of props we can send multiple ddata types,flexible dynamix content.with the help of props, we can send data from parent component (here app.js) to child components(About.js, Aleert.js etc).but remember here the data flow is one-directional.its not possible to communicate from child component back to parent component using props.in props "." operator is used to pass the data from parent to child.
+9. write JavaScript in the { }in funtion and if we have to use string template  then use backticks(` `). so when we have to use both javascript and  and string template we write it as {`           ${item}      `}	here item is the fill in the blank or we can say template. in item anything can be added with the help of props
+10.whatever written inside the funtions should be as a JSX element. JSX=(html+javascript)
+11.all components name in react must be capitalized because react differentiates between capitalized and non capitalized component name, because react treats lower case components as regular html elements, capitalizing first react letter helps react distinghuish btween regular html and JSX elements
