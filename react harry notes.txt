@@ -11,3 +11,4 @@
 9. write JavaScript in the { }in funtion and if we have to use string template  then use backticks(` `). so when we have to use both javascript and  and string template we write it as {`           ${item}      `}	here item is the fill in the blank or we can say template. in item anything can be added with the help of props
 10.whatever written inside the funtions should be as a JSX element. JSX=(html+javascript)
 11.all components name in react must be capitalized because react differentiates between capitalized and non capitalized component name, because react treats lower case components as regular html elements, capitalizing first react letter helps react distinghuish btween regular html and JSX elements
+12.style in JSX must be passed as a object(which mean has to be written insde the curly bracket)
