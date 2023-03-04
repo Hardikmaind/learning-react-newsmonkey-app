@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable no-unused-vars */
 import React, { Component } from "react";
 
@@ -20,7 +21,7 @@ export default class Newsitem extends Component {
             {/* here title and discription is getting pulled from the above this .prop and wrote in this way in a curly bracke */}
             <h5 className="card-title">{title}... </h5>
             <p className="card-text">{discription}...</p>
-            <a href={newsUrl} target="_blank" className="btn btn-sm btn-primary">
+            <a rel= "noreferrer" href={newsUrl} target="_blank" className="btn btn-sm btn-dark">
               read more
             </a>
           </div>
