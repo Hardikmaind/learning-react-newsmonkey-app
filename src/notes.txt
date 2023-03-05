@@ -1,0 +1,13 @@
+<Route  path="/Business" element={<News pageSize={8} country={"us"} category={"sports"} /> }/>
+<Route  path="/Entertainment" element={<News pageSize={8} country={"us"} category={"sports"} /> }/>
+<Route  path="/General" element={<News pageSize={8} country={"us"} category={"sports"} /> }/>
+<Route  path="/Health" element={<News pageSize={8} country={"us"} category={"sports"} /> }/>
+<Route  path="/Science" element={<News pageSize={8} country={"us"} category={"sports"} /> }/>
+<Route  path="/Sports" element={<News pageSize={8} country={"us"} category={"sports"} /> }/>
+<Route  path="/Technology" element={<News pageSize={8} country={"us"} category={"sports"} /> }/>
+
+
+shift+alt+mousehover to bring multiple cursor
+after bringing the multiple cursor to bring them at the end of the line use the end key
+
+<Route  path="/" element={<News pageSize={8} country={"us"} category={"sports"} /> }/>

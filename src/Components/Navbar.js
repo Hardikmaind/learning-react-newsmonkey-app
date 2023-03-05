@@ -1,6 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react'
 
+// since we only need link here, we removed the all uncessary
+// import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
+
 export class Navbar extends Component {
 
 
@@ -8,38 +12,38 @@ export class Navbar extends Component {
     return (
       <div><nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <a className="navbar-brand" href="/">NewsMonkey</a>
+        <Link className="navbar-brand" to="/">NewsMonkey</Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/">Home</a>
+              <Link className="nav-link active" aria-current="page" to="/">Home</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/About">About</a>
+              <Link className="nav-link" to="/About">About</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/About">Business</a>
+              <Link className="nav-link" to="/Business">Business</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/About">Entertainment</a>
+              <Link className="nav-link" to="/Entertainment">Entertainment</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/About">General</a>
+              <Link className="nav-link" to="/General">General</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/About">Health</a>
+              <Link className="nav-link" to="/Health">Health</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/About">Science</a>
+              <Link className="nav-link" to="/Science">Science</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/About">Sport</a>
+              <Link className="nav-link" to="/Sport">Sport</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/About">Technology</a>
+              <Link className="nav-link" to="/Technology">Technology</Link>
             </li>
             
             
