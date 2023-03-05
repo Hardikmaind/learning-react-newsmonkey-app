@@ -1,8 +1,26 @@
 import React, { Component } from "react";
 import Newsitem from "./Newsitem";
 import Spinner from './Spinner';
+import PropTypes from 'prop-types'
+
 
 export default class News extends Component {
+
+  static defaultProps = {
+    country:'us',
+    pageSize:5,
+    category:'general'
+  }
+  static propTypes = {
+    country:PropTypes.string,
+    pageSize:PropTypes.number,
+    category:PropTypes.string
+  }
+
+
+
+
+
   constructor() {
     // must call  super constructor in derived class before accessing 'this' or returnning from derived constructor
     super();
@@ -14,8 +32,12 @@ export default class News extends Component {
       // so i want this to be run when loading is true
       loading: false,
       page: 1,
+      // this below i have created the custom variable APIKEY in the intial state of the webiste in the constructor. it will save me the time to apply new keys in the url in the componentdidmount ,handlePrevClick,handleNextClick. by just writing the apikey=${APIKEY}. and APIKEY i have written here below
+      APIKEY:'3d5dd63f2c134445a6d18d0607da4543'
     };
   }
+
+  
 
   // this will run after the render runs. the order is first constructor will run then render will run then componentdidmount() will mount will run
   async componentDidMount() {
@@ -23,8 +45,9 @@ export default class News extends Component {
     // added &pageSize=12, so that only 1- articles should be visible on single page.this technique i have learnt from the newsapi.org website
 
     // dont use such api(free) which fetches more than 100 results because  then the limit expires and it asks for the premiu, subscription. there fetch such api which have less then 100 resulta then this will work. or you will get WHITE page as error.
+    
     let Url =
-      `https://newsapi.org/v2/everything?q=ipl&from=2023-03-04&to=2023-03-04&sortBy=popularity&apiKey=878a81f04b8f4768bed4a0aa659eb565&pageSize=${this.props.pageSize}&page=1`;
+      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.state.APIKEY}&page=1&pageSize=${this.props.pageSize}`;
 
         // this below means that before loading the articles, the gif will run(true), and after loading the articles , the gif will not run(false)
       this.setState({loading:true})
@@ -48,8 +71,7 @@ export default class News extends Component {
   handlePrevClick = async () => {
     console.log("previoous");
 
-    let Url = `https://newsapi.org/v2/everything?q=ipl&from=2023-03-04&to=2023-03-04&sortBy=popularity&apiKey=878a81f04b8f4768bed4a0aa659eb565&page=${this.state.page - 1
-      }&pageSize=${this.props.pageSize}`;
+    let Url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.state.APIKEY}&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
 
       this.setState({loading:true})
 
@@ -73,8 +95,7 @@ export default class News extends Component {
     if (!(this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize))) {
 
     
-      let Url = `https://newsapi.org/v2/everything?q=ipl&from=2023-03-04&to=2023-03-04&sortBy=popularity&apiKey=878a81f04b8f4768bed4a0aa659eb565&page=${this.state.page + 1
-        }&pageSize=${this.props.pageSize}`;
+      let Url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.state.APIKEY}&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
         
         // when data is not there loading is true , that means it should be loading
         this.setState({loading:true})
@@ -100,7 +121,7 @@ export default class News extends Component {
     return (
       <div className="container my-3">
         {/* text center class is used to center the text in container */}
-        <h2 className="text-center">newsmonkey top headlines</h2>
+        <h2 className="text-center" style={{margin:'35px 0px'}}>Newsmonkey-Top headlines</h2>
         
         {/* so below logic states that ,when the "this.state.loading" which basically is loading  is true and <spinner/> is true . then only the spinner will load */}
         {this.state.loading && <Spinner/>}
