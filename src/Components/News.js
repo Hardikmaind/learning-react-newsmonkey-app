@@ -6,6 +6,10 @@ import PropTypes from 'prop-types'
 
 export default class News extends Component {
 
+
+  // this below i have created the custom variable APIKEY in the intial state of the webiste in the constructor. it will save me the time to apply new keys in the url in the componentdidmount ,handlePrevClick,handleNextClick. by just writing the apikey=${APIKEY}. and APIKEY i have written here below
+  APIKEY='3d5dd63f2c134445a6d18d0607da4543'
+
   static defaultProps = {
     country:'us',
     pageSize:5,
@@ -32,11 +36,29 @@ export default class News extends Component {
       // so i want this to be run when loading is true
       loading: false,
       page: 1,
-      // this below i have created the custom variable APIKEY in the intial state of the webiste in the constructor. it will save me the time to apply new keys in the url in the componentdidmount ,handlePrevClick,handleNextClick. by just writing the apikey=${APIKEY}. and APIKEY i have written here below
-      APIKEY:'3d5dd63f2c134445a6d18d0607da4543'
+      
+      
     };
   }
 
+  async updateNews(){
+    let Url =
+    `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.APIKEY}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+
+    this.setState({loading:true})
+
+  let data = await fetch(Url);
+  let parsedData = await data.json();
+
+  console.log(parsedData);
+  this.setState({
+    articles: parsedData.articles,
+    totalResults: parsedData.totalResults,
+
+    loading:false
+  });
+
+  }
   
 
   // this will run after the render runs. the order is first constructor will run then render will run then componentdidmount() will mount will run
@@ -46,73 +68,98 @@ export default class News extends Component {
 
     // dont use such api(free) which fetches more than 100 results because  then the limit expires and it asks for the premiu, subscription. there fetch such api which have less then 100 resulta then this will work. or you will get WHITE page as error.
     
-    let Url =
-      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.state.APIKEY}&page=1&pageSize=${this.props.pageSize}`;
+    // let Url =
+    //   `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.APIKEY}&page=1&pageSize=${this.props.pageSize}`;
 
-        // this below means that before loading the articles, the gif will run(true), and after loading the articles , the gif will not run(false)
-      this.setState({loading:true})
+    //     // this below means that before loading the articles, the gif will run(true), and after loading the articles , the gif will not run(false)
+    //   this.setState({loading:true})
 
-    // await funtions are only allowed inside the async function
-    let data = await fetch(Url);
-    let parsedData = await data.json();
-    // 'this' tells us the object in the class
-    console.log(parsedData);
-    this.setState({
-      articles: parsedData.articles,
-      totalResults: parsedData.totalResults,
-      //added this so that initally it should start loading when our applicaiton is starting
-      loading:false
-    });
+    // // await funtions are only allowed inside the async function
+    // let data = await fetch(Url);
+    // let parsedData = await data.json();
+    // // 'this' tells us the object in the class
+    // console.log(parsedData);
+    // this.setState({
+    //   articles: parsedData.articles,
+    //   totalResults: parsedData.totalResults,
+    //   //added this so that initally it should start loading when our applicaiton is starting
+    //   loading:false
+    // });
 
     // this i have wriiten to show the order
     // console.log('cdm')
+
+
+
+
+
+    this.updateNews()
+
   }
 
   handlePrevClick = async () => {
-    console.log("previoous");
 
-    let Url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.state.APIKEY}&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
 
-      this.setState({loading:true})
 
-    // await funtions are only allowed inside the async function
-    let data = await fetch(Url);
-    let parsedData = await data.json();
-    console.log(parsedData);
+    // console.log("previoous");
 
+    // let Url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.APIKEY}&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
+
+    //   this.setState({loading:true})
+
+    // // await funtions are only allowed inside the async function
+    // let data = await fetch(Url);
+    // let parsedData = await data.json();
+    // console.log(parsedData);
+
+    // this.setState({
+    //   page: this.state.page - 1,
+    //   articles: parsedData.articles,
+    //   loading: false
+    // });
+
+    this.updateNews()
     this.setState({
-      page: this.state.page - 1,
-      articles: parsedData.articles,
-      loading: false
-    });
+      page:this.state.page-1
+    })
+
+
+
   };
 
   // written async becuase we have used the await inside
   handleNextClick = async () => {
-    console.log("next   ");
 
-    // added ! this operator in the if and removes if
-    if (!(this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize))) {
+
+    // console.log("next   ");
+
+    // // added ! this operator in the if and removes if
+    // if (!(this.state.page + 1 > Math.ceil(this.state.totalResults / this.props.pageSize))) {
 
     
-      let Url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.state.APIKEY}&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
+    //   let Url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.APIKEY}&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
         
-        // when data is not there loading is true , that means it should be loading
-        this.setState({loading:true})
+    //     // when data is not there loading is true , that means it should be loading
+    //     this.setState({loading:true})
         
-        // await funtions are only allowed inside the async function
-        let data = await fetch(Url);
-        let parsedData = await data.json();
-        // when the data is come/fetch loading disables
-        // this.setState({loading:false}) , this can be clubbed into below this.setState
-      console.log(parsedData);
+    //     // await funtions are only allowed inside the async function
+    //     let data = await fetch(Url);
+    //     let parsedData = await data.json();
+    //     // when the data is come/fetch loading disables
+    //     // this.setState({loading:false}) , this can be clubbed into below this.setState
+    //   console.log(parsedData);
 
-      this.setState({
-        page: this.state.page + 1,
-        articles: parsedData.articles,
-        loading:false
-      });
-    }
+    //   this.setState({
+    //     page: this.state.page + 1,
+    //     articles: parsedData.articles,
+    //     loading:false
+    //   });
+    // }
+
+    this.updateNews()
+    this.setState({
+      page: this.state.page+1
+    })
   };
 
   render() {
