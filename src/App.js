@@ -10,7 +10,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 export default class App extends Component {
 
   c = "john";
-  pageSize=8;
+  pageSize=5;
   render() {
     return (
       <>
