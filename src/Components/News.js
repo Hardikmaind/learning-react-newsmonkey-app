@@ -133,7 +133,7 @@ export class News extends Component {
     return (
       <>
         {/* text center class is used to center the text in container */}
-        <h2 className="text-center" style={{ margin: "35px 0px" }}>
+        <h2 className="text-center" style={{ margin: "35px 0px" ,marginTop:"90px"}}>
           Newsmonkey-Top {this.capitalizeFirstLetter(this.props.category)}{" "}
           headlines
         </h2>
