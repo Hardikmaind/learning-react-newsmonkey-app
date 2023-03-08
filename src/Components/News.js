@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
+import { useEffect,useState } from "react";
 import Newsitem from "./Newsitem";
 import Spinner from "./Spinner";
 import PropTypes from "prop-types";
@@ -6,111 +7,59 @@ import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 
-export default class News extends Component {
+const News =(props)=> {
 
+  const [articles, setArticles] = useState([])
+  const [loading, setLoading] = useState(true )
+  const [page, setPage] = useState(1)
+  const [totalResults, setTotalResults] = useState(0)
+  // document.title = `${capitalizeFirstLetter(
+  //   props.category
+  // )}-NewsMonkey React App`;
 
-  static defaultProps = {
-    country: "us",
-    pageSize: 5,
-    category: "general",
-  };
-  static propTypes = {
-    country: PropTypes.string,
-    pageSize: PropTypes.number,
-    category: PropTypes.string,
-  };
-
-  capitalizeFirstLetter = (string) => {
+  const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
-  constructor(props) {
-    // must call  super constructor in derived class before accessing 'this' or returnning from derived constructor
-    super(props);
-    // you will see 3 times message displayed in the console since we have 3 newsitem in the news component
-    console.log("hello i am constructor");
-    this.state = {
-      // since data fetch from the api, i have added the empty array inside of the articles
-      articles: [],
-      // so i want this to be run when loading is true
-      loading: false,
-      page: 1,
-      // this here i set the by default balue of total result as zero
-      totalResults:0
-    };
 
-    // if we have use the prop in the constructor then  we have to pass the prop in constructor and super constructor like this , see below
-    document.title = `${this.capitalizeFirstLetter(
-      this.props.category
-    )}-NewsMonkey React App`;
-  }
-
-  async updateNews() {
+  const updateNews=async ()=> {
     // this will set the intial progress to zero. the progress always goes from 0 to 100
     
-    this.props.setProgress(10);
+    props.setProgress(10);
     
-    let Url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.APIKEY}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    let Url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.APIKEY}&page=${page}&pageSize=${props.pageSize}`;
     
-    this.setState({ loading: true });
+
+    setLoading(true)
     
     // we can also used the loading bar into the steps like for example if it runs from o to 30 to 60 to 100
     // for example here i want to set the progress of my loading bar to 30 when th data is fetched
     let data = await fetch(Url);
-    this.props.setProgress(30);
+    props.setProgress(30);
     let parsedData = await data.json();
-    this.props.setProgress(70);
-
+    props.setProgress(70);
+    setArticles(parsedData.articles)
+    setTotalResults(parsedData.totalResults)
+    setLoading(false)
     console.log(parsedData);
-    this.setState({
-      articles: parsedData.articles,
-      totalResults: parsedData.totalResults,
-      
-      loading: false,
-    });
     // here after th update funtion loads the setProgress will load tp till 100
-    this.props.setProgress(100);
+    props.setProgress(100);
   }
 
-  // this will run after the render runs. the order is first constructor will run then render will run then componentdidmount() will mount will run
-  async componentDidMount() {
-    // this is for page 1. thats why added &page=1 in the last of the url.
-    // added &pageSize=12, so that only 1- articles should be visible on single page.this technique i have learnt from the newsapi.org website
 
-    // dont use such api(free) which fetches more than 100 results because  then the limit expires and it asks for the premiu, subscription. there fetch such api which have less then 100 resulta then this will work. or you will get WHITE page as error.
-
-
-    this.updateNews();
-  }
-
-  handlePrevClick = async () => {
-    // console.log("previoous");
+  // here below boxed bracket means that whatever input i wanna listen would go there, that means jiske change parye effect run ho woh chij hoti hain ye
+  useEffect(() => {
+    updateNews();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
 
 
-
-    // Await use nhi Kiya to.....vo page update hue Bina....next line of code run hota hai....await use karenge to vo func poora run hone ke baad hi ahe ka code run hoga
-    await this.setState({
-      page: this.state.page - 1,
-    });
-    this.updateNews();
-  };
-
-  // written async becuase we have used the await inside
-  handleNextClick = async () => {
-    // console.log("next   ");
-
-    // Await use nhi Kiya to.....vo page update hue Bina....next line of code run hota hai....await use karenge to vo func poora run hone ke baad hi ahe ka code run hoga
-    await this.setState({
-      page: this.state.page + 1,
-    });
-    this.updateNews();
-  };
 
   // we cannot write async infronna fetchMoreDate becau se  " it The 'async' modifier can only be used in TypeScript files.ts(8009)" so we have to write it outside the '()'
-  fetchMoreData = async() => {
- 
-    this.setState({page:this.state.page + 1})
-    let Url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.APIKEY}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+  const fetchMoreData = async() => {
+    setPage(page+1)
+    let Url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.APIKEY}&page=${page}&pageSize=${props.pageSize}`;
 
     // i want loading to be true when the the component loads at first, but when i fetch more i dont want loading here so i will remove below line. and i will show loading when i scroll down with the help of <infinteSroll> </infinteSroll> component
     // this.setState({ loading: true });
@@ -119,40 +68,37 @@ export default class News extends Component {
     let parsedData = await data.json();
 
     console.log(parsedData);
-    this.setState({
-      articles:this.state.articles.concat(parsedData.articles),
-      totalResults: parsedData.totalResults,
+    setArticles(articles.concat(parsedData.articles))
+    setTotalResults(parsedData.totalResults)
 
-      loading: false,
-    });
   };
 
-  render() {
+  
     // this i hvae written to show the order
     // console.log('render')
     return (
       <>
         {/* text center class is used to center the text in container */}
         <h2 className="text-center" style={{ margin: "35px 0px" }}>
-          Newsmonkey-Top {this.capitalizeFirstLetter(this.props.category)}{" "}
+          Newsmonkey-Top {capitalizeFirstLetter(props.category)}{" "}
           headlines
         </h2>
 
         {/* so below logic states that ,when the "this.state.loading" which basically is loading  is true and <spinner/> is true . then only the spinner will load */}
 
-        {this.state.loading && <Spinner />}
+        {loading && <Spinner />}
         <InfiniteScroll
-          dataLength={this.state.articles.length}
+          dataLength={articles.length}
           // if i didnt write the fetch more funtions then only the spimmer will appear and the news article might not load. so we have to write the define the fetch more funtion
-          next={this.fetchMoreData}
-          hasMore={this.state.articles.length !== this.state.totalResults}
+          next={fetchMoreData}
+          hasMore={articles.length !== totalResults}
           loader={<Spinner/>}
         >
         <div className="container">
           <div className="row">
             {/* here map is used to map the data to the above given article, its like loop */}
             {/* here '!this.state.loading' means if  '!this.state.loading' is false then loading will show else not */}
-            {this.state.articles.map((element) => {
+            {articles.map((element) => {
               return (
                 <div className="col-md-4 row-md-3" key={element.url}>
                   {/*  key should be inside return  and in div not in newsitmen . key identifies uniquly everynews*/}
@@ -183,5 +129,18 @@ export default class News extends Component {
         
       </>
     );
-  }
+  
 }
+
+export default News
+
+News.defaultProps = {
+  country: "us",
+  pageSize: 5,
+  category: "general",
+};
+News.propTypes = {
+  country: PropTypes.string,
+  pageSize: PropTypes.number,
+  category: PropTypes.string,
+};
