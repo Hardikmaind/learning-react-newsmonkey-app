@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from "react";
 
-export default class Newsitem extends Component {
+export  class Newsitem extends Component {
   render() {
     // this i how we use the props in the class bases components in the react
     // used the concept of destructuring the array here...in which this.props is an object and in that object title and discriminator is getting pulled away
@@ -58,3 +58,5 @@ export default class Newsitem extends Component {
     );
   }
 }
+
+export default Newsitem
