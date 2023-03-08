@@ -7,8 +7,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 
 export default class News extends Component {
-  // this below i have created the custom variable APIKEY in the intial state of the webiste in the constructor. it will save me the time to apply new keys in the url in the componentdidmount ,handlePrevClick,handleNextClick. by just writing the apikey=${APIKEY}. and APIKEY i have written here below
-  APIKEY = "3d5dd63f2c134445a6d18d0607da4543";
+
 
   static defaultProps = {
     country: "us",
@@ -51,7 +50,7 @@ export default class News extends Component {
     
     this.props.setProgress(10);
     
-    let Url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.APIKEY}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    let Url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.APIKEY}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
     
     this.setState({ loading: true });
     
@@ -111,7 +110,7 @@ export default class News extends Component {
   fetchMoreData = async() => {
  
     this.setState({page:this.state.page + 1})
-    let Url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.APIKEY}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    let Url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.APIKEY}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
 
     // i want loading to be true when the the component loads at first, but when i fetch more i dont want loading here so i will remove below line. and i will show loading when i scroll down with the help of <infinteSroll> </infinteSroll> component
     // this.setState({ loading: true });

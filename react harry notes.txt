@@ -13,3 +13,4 @@
 11.all components name in react must be capitalized because react differentiates between capitalized and non capitalized component name, because react treats lower case components as regular html elements, capitalizing first react letter helps react distinghuish btween regular html and JSX elements
 12.style in JSX must be passed as a object(which mean has to be written insde the curly bracket) 
 13. ctrl+shift+R to clear the browser cache
+14.news api is free for the local host only . so if i try to open via the other link on network it will be not opened
