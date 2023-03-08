@@ -8,8 +8,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import { BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 
 export default class App extends Component {
+
   c = "john";
-  pageSize=15;
+  pageSize=8;
   render() {
     return (
       <>
