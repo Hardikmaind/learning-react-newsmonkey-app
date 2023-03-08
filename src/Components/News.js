@@ -47,20 +47,30 @@ export default class News extends Component {
   }
 
   async updateNews() {
+    // this will set the intial progress to zero. the progress always goes from 0 to 100
+    
+    this.props.setProgress(10);
+    
     let Url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.APIKEY}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
-
+    
     this.setState({ loading: true });
-
+    
+    // we can also used the loading bar into the steps like for example if it runs from o to 30 to 60 to 100
+    // for example here i want to set the progress of my loading bar to 30 when th data is fetched
     let data = await fetch(Url);
+    this.props.setProgress(30);
     let parsedData = await data.json();
+    this.props.setProgress(70);
 
     console.log(parsedData);
     this.setState({
       articles: parsedData.articles,
       totalResults: parsedData.totalResults,
-
+      
       loading: false,
     });
+    // here after th update funtion loads the setProgress will load tp till 100
+    this.props.setProgress(100);
   }
 
   // this will run after the render runs. the order is first constructor will run then render will run then componentdidmount() will mount will run

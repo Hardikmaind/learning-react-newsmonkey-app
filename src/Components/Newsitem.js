@@ -16,12 +16,17 @@ export default class Newsitem extends Component {
           className="card "
           // style={{ width: "18rem" }} //here i have commented the width so that the card occupis the whole space in the mobile(responsive) view
         >
-          <span
-            className="position-absolute top-0  translate-middle badge rounded-pill bg-danger"
-            style={{ zIndex: 1, left: "90%" }}
+          <div
+          // added css here so that the badges on the card appear good on the mobile
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              position: "absolute",
+              right: "0",
+            }}
           >
-            {source}
-          </span>
+            <span className="badge rounded-pill bg-danger">{source}</span>
+          </div>
           {/* this says that, if image is not found then say, image not found ,or else show the imgUrl */}
           <img
             src={!imageUrl ? "image not found" : imageUrl}
