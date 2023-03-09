@@ -13,6 +13,8 @@ const News =(props)=> {
   const [loading, setLoading] = useState(true )
   const [page, setPage] = useState(1)
   const [totalResults, setTotalResults] = useState(0)
+
+  // moved this below to below in useEffect
   // document.title = `${capitalizeFirstLetter(
   //   props.category
   // )}-NewsMonkey React App`;
@@ -49,6 +51,9 @@ const News =(props)=> {
 
   // here below boxed bracket means that whatever input i wanna listen would go there, that means jiske change parye effect run ho woh chij hoti hain ye
   useEffect(() => {
+      document.title = `${capitalizeFirstLetter(
+    props.category
+  )}-NewsMonkey React App`;
     updateNews();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -58,8 +63,12 @@ const News =(props)=> {
 
   // we cannot write async infronna fetchMoreDate becau se  " it The 'async' modifier can only be used in TypeScript files.ts(8009)" so we have to write it outside the '()'
   const fetchMoreData = async() => {
+    let Url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.APIKEY}&page=${page+1}&pageSize=${props.pageSize}`;
     setPage(page+1)
-    let Url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.APIKEY}&page=${page}&pageSize=${props.pageSize}`;
+    // brought the setPage(page+1) down and in the url itself incremented the page  by +1
+
+
+
 
     // i want loading to be true when the the component loads at first, but when i fetch more i dont want loading here so i will remove below line. and i will show loading when i scroll down with the help of <infinteSroll> </infinteSroll> component
     // this.setState({ loading: true });
@@ -79,7 +88,7 @@ const News =(props)=> {
     return (
       <>
         {/* text center class is used to center the text in container */}
-        <h2 className="text-center" style={{ margin: "35px 0px" }}>
+        <h2 className="text-center" style={{ margin: "35px 0px" ,marginTop:"90px" }}>
           Newsmonkey-Top {capitalizeFirstLetter(props.category)}{" "}
           headlines
         </h2>
